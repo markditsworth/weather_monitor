@@ -58,12 +58,20 @@ class Weather:
 
     def getForecast(self):
         forecasts = []
+        today = None
         forecast_periods = nws.getForecast(self.gridId, self.gridX, self.gridY)
         if forecast_periods:
             for period in forecast_periods:
                 name = period.get("name").lower().split(" ")[0]
-                if name in self.DAYS:
-                    break
+                if today is None:
+                    if name in self.DAYS:
+                        today = name
+                    else:
+                        continue
+                else:
+                    if name != today:
+                        break
+                    
                 forecast = {
                     "@timestamp": str(datetime.utcnow()),
                     "name": period.get("name"),
