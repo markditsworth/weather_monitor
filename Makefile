@@ -1,12 +1,12 @@
-.PHONY: clean
-clean:
+.PHONY: clean-venv
+clean-venv:
 	rm -rf __pycache__/
 	rm -rf ALERTS/
 	rm -rf venv/
 	rm -f location.json
 
 .PHONY: build
-build: clean
+build: 
 	docker build -t weather_monitor .
 
 .PHONY: local-venv

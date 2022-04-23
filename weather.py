@@ -59,6 +59,7 @@ class Weather:
     def getForecast(self):
         forecasts = []
         today = None
+        tomorrow = None
         forecast_periods = nws.getForecast(self.gridId, self.gridX, self.gridY)
         if forecast_periods:
             for period in forecast_periods:
@@ -68,8 +69,11 @@ class Weather:
                         today = name
                     else:
                         continue
+                elif tomorrow is None:
+                    if name in self.DAYS and name != today:
+                        tomorrow = name
                 else:
-                    if name != today:
+                    if name != today and name != tomorrow:
                         break
                     
                 forecast = {
